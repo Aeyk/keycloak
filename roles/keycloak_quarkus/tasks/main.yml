@@ -15,6 +15,19 @@
   ansible.builtin.include_tasks: install.yml
   tags:
     - install
+  when: ansible_facts.os_family == "RedHat"
+
+- name: Debian specific tasks
+  ansible.builtin.include_tasks: debian.yml
+  when: ansible_facts.os_family == "Debian"
+  tags:
+    - unbound
+
+- name: RedHat specific tasks
+  ansible.builtin.include_tasks: redhat.yml
+  when: ansible_facts.os_family == "RedHat"
+  tags:
+    - unbound
 
 - name: Include systemd tasks
   ansible.builtin.include_tasks: systemd.yml
